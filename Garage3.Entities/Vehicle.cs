@@ -25,5 +25,7 @@ namespace Garage3.Entities
         public int MemberId { get; set; }
         public Member Member { get; set; }
 
+
+        public VehicleType VehicleType { get; set; }
     }
 }

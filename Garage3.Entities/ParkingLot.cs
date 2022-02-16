@@ -11,6 +11,7 @@ namespace Garage3.Entities
     {
         public int Id { get; set; }
         public int ParkingNo { get; set; }
+        public DateTime ArrivalTime { get; set; }
 
     }
 }
