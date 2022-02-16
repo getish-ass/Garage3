@@ -22,6 +22,8 @@ namespace Garage3.Entities
 
         public int NoWheels { get; set;  }
 
-      
+        public int MemberId { get; set; }
+        public Member Member { get; set; }
+
     }
 }
