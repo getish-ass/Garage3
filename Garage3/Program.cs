@@ -1,4 +1,10 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Garage3.Data;
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<Garage3Context>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Garage3Context")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

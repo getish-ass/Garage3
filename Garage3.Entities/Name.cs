@@ -13,9 +13,8 @@ namespace Garage3.Entities
         public string LastName { get; set; }
         public string FullName => $"{FirstName} {LastName}";
 
+        public int MemberId { get; set; }
+        public Member Member { get; set; }
 
-
-
-      
     }
 }

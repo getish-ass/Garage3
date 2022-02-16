@@ -1,0 +1,20 @@
+﻿#nullable disable
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Garage3.Entities;
+
+namespace Garage3.Data
+{
+    public class Garage3Context : DbContext
+    {
+        public DbSet<Garage3.Entities.Member> Member { get; set; }
+        public Garage3Context (DbContextOptions<Garage3Context> options)
+            : base(options)
+        {
+        }
+
+    }
+}
