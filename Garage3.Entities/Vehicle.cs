@@ -27,5 +27,8 @@ namespace Garage3.Entities
 
 
         public VehicleType VehicleType { get; set; }
+
+        public ICollection<ParkingLot> ParkingLot { get; set; }
+
     }
 }
