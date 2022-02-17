@@ -40,7 +40,7 @@ namespace Garage3.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Member");
+                    b.ToTable("Member", (string)null);
                 });
 
             modelBuilder.Entity("Garage3.Entities.Name", b =>
@@ -67,7 +67,7 @@ namespace Garage3.Data.Migrations
                     b.HasIndex("MemberId")
                         .IsUnique();
 
-                    b.ToTable("Name");
+                    b.ToTable("Name", (string)null);
                 });
 
             modelBuilder.Entity("Garage3.Entities.ParkingLot", b =>
@@ -91,7 +91,7 @@ namespace Garage3.Data.Migrations
 
                     b.HasIndex("VehicleId");
 
-                    b.ToTable("ParkingLot");
+                    b.ToTable("ParkingLot", (string)null);
                 });
 
             modelBuilder.Entity("Garage3.Entities.Vehicle", b =>
@@ -134,7 +134,7 @@ namespace Garage3.Data.Migrations
 
                     b.HasIndex("VehicleTypeId");
 
-                    b.ToTable("Vehicle");
+                    b.ToTable("Vehicle", (string)null);
                 });
 
             modelBuilder.Entity("Garage3.Entities.VehicleType", b =>
@@ -156,7 +156,7 @@ namespace Garage3.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("VehicleType");
+                    b.ToTable("VehicleType", (string)null);
                 });
 
             modelBuilder.Entity("Garage3.Entities.Name", b =>
