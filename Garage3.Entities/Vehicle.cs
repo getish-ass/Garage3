@@ -29,10 +29,14 @@ namespace Garage3.Entities
         [Range(2, 16)]
         public int NoWheels { get; set;  }
 
+        //Foreign key
         public int MemberId { get; set; }
+        //Navigation property
         public Member Member { get; set; }
 
+        //Foreign key
         public int VehicleTypeId { get; set; }
+        //Navigation property
         public VehicleType VehicleType { get; set; }
 
         public ICollection<ParkingLot> ParkingLot { get; set; }

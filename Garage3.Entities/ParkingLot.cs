@@ -15,8 +15,10 @@ namespace Garage3.Entities
 
         public DateTime ArrivalTime { get; set; }
 
+        //Foreign key
         public int? VehicleId { get; set; }
-
+        
+        //Navigation property
         public Vehicle Vehicle { get; set; }
     }
 }
