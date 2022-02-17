@@ -19,9 +19,8 @@ namespace Garage3.Entities
         [Range(18, 90)]
         public int Age { get; set; }
 
-        //Navigation property
         public Name Name { get; set; }
-    
+         
         public ICollection<Vehicle> Vehicles { get; set; }
     }
 }

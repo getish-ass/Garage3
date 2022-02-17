@@ -18,10 +18,8 @@ namespace Garage3.Entities
         public string LastName { get; set; }
         
         public string FullName => $"{FirstName} {LastName}";
-
-        //Foreign key
+    
         public int MemberId { get; set; }
-        //Navigation property
         public Member Member { get; set; }
 
     }
