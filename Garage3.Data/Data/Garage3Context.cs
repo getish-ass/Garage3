@@ -11,7 +11,7 @@ namespace Garage3.Data
     public class Garage3Context : DbContext
     {
         public DbSet<Garage3.Entities.Member> Member { get; set; }
-        //public DbSet<Garage3.Entities.Vehicle> Vehicle { get; set; }
+        public DbSet<Garage3.Entities.Vehicle> Vehicle { get; set; }
         public Garage3Context (DbContextOptions<Garage3Context> options)
             : base(options)
         {
