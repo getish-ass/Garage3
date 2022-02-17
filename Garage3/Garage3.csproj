@@ -21,4 +21,8 @@
     <ProjectReference Include="..\Garage3.Entities\Garage3.Entities.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\VehicleViewModels\" />
+  </ItemGroup>
+
 </Project>
