@@ -159,6 +159,28 @@ namespace Garage3.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        // GET: CheckOut
+
+        // Checking out
+        public IActionResult CheckOut()
+        {
+            return View();
+        }
+
+        // POST: ConfirmCheckOut
+        public IActionResult ConfirmCheckOut()
+        {
+            return View();
+        }
+
+        // GET: Receipt
+
+        // POST: Receipt
+        public IActionResult Receipt()
+        {
+            return View();
+        }
+
         private bool VehicleExists(int id)
         {
             return _context.Vehicle.Any(e => e.Id == id);
