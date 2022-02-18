@@ -16,6 +16,18 @@ namespace Garage3.Data
             : base(options)
         {
         }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<Name>()
+                        .HasKey(n => new { n.MemberId });
+
+            modelBuilder.Entity<Member>().Property(m => m.PersonalNo).IsRequired();
+
+            modelBuilder.Entity<Vehicle>()
+                        .HasKey(v => new { v.MemberId, v .VehicleTypeId} );
+
+        }
     }
 }

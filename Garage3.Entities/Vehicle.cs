@@ -26,7 +26,7 @@ namespace Garage3.Entities
         [StringLength(10)]
         public string Color { get; set; }
         
-        [Range(2, 16)]
+        [Range(2, 16)] 
         public int NoWheels { get; set;  }
 
         public int MemberId { get; set; }
