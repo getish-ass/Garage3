@@ -18,6 +18,35 @@ namespace Garage3.Entities
         public int Size { get; set; }
 
         public ICollection<Vehicle> Vehicles { get; set; }
+
+
+
+        public VehicleType()
+        {
+            
+        }
+
+
+
+        public VehicleType(int typeCode)
+        {
+            TypeCode = typeCode;
+        }
+
+
+        public VehicleType(int typeCode, string typeName, int size)
+        {
+            TypeCode = typeCode;
+            TypeName = typeName;
+            Size = size;
+
+        }
+
+
+
+
+
+
     }
 
 }

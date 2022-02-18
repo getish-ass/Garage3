@@ -22,5 +22,24 @@ namespace Garage3.Entities
         public Name Name { get; set; }
 
         public ICollection<Vehicle> Vehicles { get; set; }
+
+
+        private Member()
+        {
+            Age = 0;
+            Name = null!;
+            PersonalNo = null!;
+        }
+
+        public Member(string personalNo, int age, Name name)
+        {
+            PersonalNo = personalNo;
+            Age = age;
+            Name = name;
+        }
+
+
+
+
     }
 }

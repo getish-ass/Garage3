@@ -37,5 +37,27 @@ namespace Garage3.Entities
 
         public ICollection<ParkingLot> ParkingLot { get; set; }
 
+
+        public Vehicle()
+        {
+
+        }
+
+
+        public Vehicle(string regNo, string model, string brand, string color, int noWheel)
+        {
+            RegNo = regNo;
+            Model = model;
+            Brand = brand;
+            Color = color;
+            NoWheels = noWheel;
+
+        }
+
+
+
+
+
+
     }
 }
