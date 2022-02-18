@@ -20,50 +20,13 @@ namespace Garage3.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Name>()
-                        .HasKey(n => new { n.MemberId });
-
             modelBuilder.Entity<Member>().Property(m => m.PersonalNo).IsRequired();
 
             modelBuilder.Entity<Vehicle>()
                         .HasKey(v => new { v.MemberId, v .VehicleTypeId} );
 
-
-
-
-
-
-            modelBuilder.Entity<Member>()
-                        .OwnsOne(m => m.Name)
-                        .Property(m => m.FirstName)
-                        .HasColumnName("FirstName");
-
-            modelBuilder.Entity<Member>()
-                        .OwnsOne(m => m.Name)
-                        .Property(m => m.LastName)
-                        .HasColumnName("LastName");
-
-
-            modelBuilder.Entity<Member>()
-                        .OwnsOne(m => m.Name)
-                        .Property(m => m.FirstName)
-                        .HasColumnName("FirstName");
-
-            modelBuilder.Entity<Member>()
-                        .OwnsOne(m => m.Name)
-                        .Property(m => m.LastName)
-                        .HasColumnName("LastName");
-
-
             modelBuilder.Entity<Name>()
-                        .HasKey(n => new { n.MemberId });
-
-
-
-
-            modelBuilder.Entity<Vehicle>()
-                        .HasKey(v => new { v.MemberId, v.VehicleTypeId });
-                     
+                        .HasKey(n => new { n.MemberId });                     
 
             modelBuilder.Entity<VehicleType>()
                         .HasMany(t => t.Vehicles);

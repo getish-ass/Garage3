@@ -52,6 +52,9 @@ namespace Garage3.Data.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
                     b.Property<string>("LastName")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
@@ -72,20 +75,26 @@ namespace Garage3.Data.Migrations
                     b.Property<int?>("VehicleId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("VehicleMemberId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("VehicleTypeId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("VehicleId");
+                    b.HasIndex("VehicleMemberId", "VehicleTypeId");
 
                     b.ToTable("ParkingLot");
                 });
 
             modelBuilder.Entity("Garage3.Entities.Vehicle", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("MemberId")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    b.Property<int>("VehicleTypeId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Brand")
                         .HasMaxLength(30)
@@ -95,7 +104,7 @@ namespace Garage3.Data.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
-                    b.Property<int>("MemberId")
+                    b.Property<int>("Id")
                         .HasColumnType("int");
 
                     b.Property<string>("Model")
@@ -110,12 +119,7 @@ namespace Garage3.Data.Migrations
                         .HasMaxLength(6)
                         .HasColumnType("nvarchar(6)");
 
-                    b.Property<int>("VehicleTypeId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MemberId");
+                    b.HasKey("MemberId", "VehicleTypeId");
 
                     b.HasIndex("VehicleTypeId");
 
@@ -159,7 +163,7 @@ namespace Garage3.Data.Migrations
                 {
                     b.HasOne("Garage3.Entities.Vehicle", "Vehicle")
                         .WithMany("ParkingLot")
-                        .HasForeignKey("VehicleId");
+                        .HasForeignKey("VehicleMemberId", "VehicleTypeId");
 
                     b.Navigation("Vehicle");
                 });
