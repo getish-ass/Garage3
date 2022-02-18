@@ -11,11 +11,34 @@ namespace Garage3.Entities
     {
         public int Id { get; set; }
         
-        public int ParkingNo { get; set; }
+       // public int ParkingNo { get; set; }
 
-        public DateTime ArrivalTime { get; set; }
+       // public DateTime ArrivalTime { get; set; }
 
         public int? VehicleId { get; set; }
         public Vehicle Vehicle { get; set; }
+
+
+        public ParkingLot()
+        {
+            //ParkingNo = 0;
+        }
+
+
+        public ParkingLot(int typeName)
+        {
+           // ParkingNo = typeName;
+        }
+
+
+        public ParkingLot(int parkingNo, DateTime arrivalTime)
+        {
+           // ParkingNo = parkingNo;
+
+           // ArrivalTime = arrivalTime;
+
+        }
+
+
     }
 }

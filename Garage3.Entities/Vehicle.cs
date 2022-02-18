@@ -20,7 +20,7 @@ namespace Garage3.Entities
         [StringLength(20)]
         public string Model { get; set;  }
 
-        [StringLength(20)]
+        [StringLength(30)]
         public string Brand { get; set; }
         
         [StringLength(10)]
@@ -36,6 +36,28 @@ namespace Garage3.Entities
         public VehicleType VehicleType { get; set; }
 
         public ICollection<ParkingLot> ParkingLot { get; set; }
+
+
+        public Vehicle()
+        {
+
+        }
+
+
+        public Vehicle(string regNo, string model, string brand, string color, int noWheel)
+        {
+            RegNo = regNo;
+            Model = model;
+            Brand = brand;
+            Color = color;
+            NoWheels = noWheel;
+
+        }
+
+
+
+
+
 
     }
 }
