@@ -146,6 +146,24 @@ namespace Garage3.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        // Checking out
+        public IActionResult CheckOut()
+        {
+            return View();
+        }
+
+        // Confirming outchecking
+        public IActionResult ConfirmCheckOut()
+        {
+            return View();
+        }
+
+        // Showing receipt
+        public IActionResult Receipt()
+        {
+            return View();
+        }
+
         private bool MemberExists(int id)
         {
             return _context.Member.Any(e => e.Id == id);

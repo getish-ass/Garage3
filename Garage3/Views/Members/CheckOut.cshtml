@@ -1,0 +1,19 @@
+﻿@{
+    ViewData["Title"] = "Checking out Vehicle";
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>You are checking out vehicle ABC123</p>
+
+<div class="column">
+    <div class="col-md-4">
+        <form asp-action="ConfirmCheckOut">
+                <div class="form-group">
+                <input type="submit" value="Confirm checkout" class="btn btn-primary" />
+        </form>
+        <form asp-action="Index">
+                <div class="form-group">
+                <input type="submit" value="Go back to the Garage" class="btn btn-primary" />
+        </form>
+    </div>
+</div>
