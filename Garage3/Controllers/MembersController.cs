@@ -146,19 +146,23 @@ namespace Garage3.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        // GET: CheckOut
+
         // Checking out
         public IActionResult CheckOut()
         {
             return View();
         }
 
-        // Confirming outchecking
+        // POST: ConfirmCheckOut
         public IActionResult ConfirmCheckOut()
         {
             return View();
         }
 
-        // Showing receipt
+        // GET: Receipt
+
+        // POST: Receipt
         public IActionResult Receipt()
         {
             return View();
