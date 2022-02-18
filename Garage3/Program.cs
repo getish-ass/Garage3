@@ -14,10 +14,7 @@ builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-
 app.SeedDataAsync().GetAwaiter().GetResult();
-
-
 
 
 // Configure the HTTP request pipeline.
