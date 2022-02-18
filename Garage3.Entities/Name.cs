@@ -22,5 +22,22 @@ namespace Garage3.Entities
         public int MemberId { get; set; }
         public Member Member { get; set; }
 
+
+        private Name()
+        {
+            FirstName = null!;
+            LastName = null!;
+        }
+
+        public Name(string firstName, string lastName)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+        }
+
+
+
+
+
     }
 }
