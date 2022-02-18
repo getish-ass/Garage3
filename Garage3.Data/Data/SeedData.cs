@@ -44,35 +44,68 @@ namespace Garage3.Data.Data
 
 
 
-        private static IEnumerable<Vehicle> GetVehicles(IEnumerable<Member> members, IEnumerable<VehicleType> vehicleTypes, IEnumerable<ParkingLot> parkingLots)
+        private static IEnumerable<Vehicle> GetVehicles(List<Member> members, List<VehicleType> vehicleTypes, List<ParkingLot> parkingLots)
         {
             var vehicles = new List<Vehicle>();
 
-            foreach (var member in members)
+            var spots = parkingLots.Count;
+            var skip = 0;
+            var take = 0;
+
+
+
+            for (int i = 0; i < 20; i++)
             {
-                foreach (var vehicleType in vehicleTypes)
+                if(skip >= spots - 3) continue;
+                var type = vehicleTypes[faker.Random.Int(0, 2)];
+                take = type.Size;
+
+
+                var regNo = faker.Random.AlphaNumeric(6);
+                var model = faker.Vehicle.Model();
+                var brand = faker.Vehicle.Manufacturer();
+                var color = faker.Commerce.Color();
+                var noWheel = faker.Random.Int(1, 5);
+
+                var vehicle = new Vehicle(regNo, model, brand, color, noWheel)
                 {
-                        if (faker.Random.Int(0, 5) == 0)
-                        {
-                            var regNo = faker.Random.AlphaNumeric(6);
-                            var model = faker.Company.CatchPhrase();
-                            var brand = faker.Company.CompanyName();
-                            var color = faker.Commerce.Color();
-                            var noWheel = faker.Random.Int(1, 5);
+                    Member = members[i],
+                    VehicleType = type ,
+                    ParkingLot = parkingLots.Skip(skip).Take(take).ToList()
 
-                            var vehicle = new Vehicle(regNo, model, brand, color, noWheel)
-                            {
-                                Member = member,
-                                VehicleType = vehicleType,
+                };
 
-                            };
+                skip += take;
+                vehicles.Add(vehicle);
 
-                            vehicles.Add(vehicle);
-                        }
-
-
-                }
             }
+
+            //foreach (var member in members)
+            //{
+            //    foreach (var vehicleType in vehicleTypes)
+            //    {
+            //            if (faker.Random.Int(0, 5) == 0)
+            //            {
+            //                var regNo = faker.Random.AlphaNumeric(6);
+            //                var model = faker.Vehicle.Model();
+            //                var brand = faker.Vehicle.Manufacturer();
+            //                var color = faker.Commerce.Color();
+            //                var noWheel = faker.Random.Int(1, 5);
+
+            //                var vehicle = new Vehicle(regNo, model, brand, color, noWheel)
+            //                {
+            //                    Member = member,
+            //                    VehicleType = vehicleType,
+            //                    ParkingLot = 
+
+            //                };
+
+            //                vehicles.Add(vehicle);
+            //            }
+
+
+            //    }
+           // }
 
             return vehicles;
         }
@@ -81,7 +114,7 @@ namespace Garage3.Data.Data
 
 
 
-        private static IEnumerable<VehicleType> GetVehicleType()
+        private static List<VehicleType> GetVehicleType()
         {
             var vehicleTypes = new List<VehicleType>()
             {
@@ -94,7 +127,7 @@ namespace Garage3.Data.Data
             return vehicleTypes;
         }
 
-        private static IEnumerable<Member> GetMembers()
+        private static List<Member> GetMembers()
         {
             var members = new List<Member>();
 
@@ -116,11 +149,11 @@ namespace Garage3.Data.Data
         }
 
 
-        private static IEnumerable<ParkingLot> GetParkingLot()
+        private static List<ParkingLot> GetParkingLot()
         {
             var parkingLots = new List<ParkingLot>();
 
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < 90; i++)
             {
 
 

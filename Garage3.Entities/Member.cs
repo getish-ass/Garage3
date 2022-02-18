@@ -13,7 +13,7 @@ namespace Garage3.Entities
         public int Id { get; set; }
 
         [Required]
-        [StringLength(12)]
+        [StringLength(13)]
         public string PersonalNo { get; set; }
         
         [Range(18, 90)]

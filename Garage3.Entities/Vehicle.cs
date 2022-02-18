@@ -20,7 +20,7 @@ namespace Garage3.Entities
         [StringLength(20)]
         public string Model { get; set;  }
 
-        [StringLength(20)]
+        [StringLength(30)]
         public string Brand { get; set; }
         
         [StringLength(10)]

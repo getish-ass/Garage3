@@ -1,5 +1,6 @@
 ﻿using Garage3.Data;
 using Garage3.Data.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Garage3.Extensions
 {
@@ -13,6 +14,8 @@ namespace Garage3.Extensions
                 var serviceProvider = scope.ServiceProvider;
                 var db = serviceProvider.GetRequiredService<Garage3Context>();
 
+                //db.Database.EnsureDeleted();
+                //db.Database.Migrate();
 
                 try
                 {
