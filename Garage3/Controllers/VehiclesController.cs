@@ -167,12 +167,6 @@ namespace Garage3.Controllers
             return View();
         }
 
-        // POST: ConfirmCheckOut
-        public IActionResult ConfirmCheckOut()
-        {
-            return View();
-        }
-
         // GET: Receipt
 
         // POST: Receipt

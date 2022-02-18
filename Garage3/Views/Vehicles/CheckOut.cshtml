@@ -3,11 +3,12 @@
 }
 <h1>@ViewData["Title"]</h1>
 
-<p>You are checking out vehicle ABC123</p>
+<h4>You are checking out vehicle (vehicle number)</h4>
+<p>Do you want to check out?</p>
 
 <div class="column">
     <div class="col-md-4">
-        <form asp-action="ConfirmCheckOut">
+        <form asp-action="Receipt">
                
                 <input type="submit" value="Confirm checkout" class="btn btn-primary" />
         </form>
