@@ -1,4 +1,5 @@
 ﻿#nullable disable
+using Bogus;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,8 +27,10 @@ namespace Garage3.Controllers
         // GET: Members
         public async Task<IActionResult> Index()
         {
-            var viewModel = _context.Member.Select(m => new MemberIndexViewModel(m.Id, m.PersonalNo, m.Age, m.Name.FullName));
-                
+            var viewModel = _context.Member.OrderByDescending(m => m.Id)
+                                            .Select(m => new MemberIndexViewModel(m.Id, m.PersonalNo, m.Age, m.Name.FullName))
+                                            .Take(10);
+                                        
             return View(await viewModel.ToListAsync());
         }
 
@@ -42,6 +45,7 @@ namespace Garage3.Controllers
             var member = await _context.Member
                 .Include(m => m.Vehicles)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (member == null)
             {
                 return NotFound();
@@ -61,15 +65,18 @@ namespace Garage3.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,PersonalNo,Age")] Member member)
+        public async Task<IActionResult> Create(MemberCreateViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
+                var member = new Member(viewModel.PersonalNo, viewModel.Age, new Name(viewModel.NameFirstName, viewModel.NameLastName));
+
                 _context.Add(member);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(member);
+
+            return View(viewModel);
         }
 
         // GET: Members/Edit/5
