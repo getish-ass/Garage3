@@ -29,7 +29,7 @@ namespace Garage3.Controllers
         {
             var viewModel = _context.Member.OrderByDescending(m => m.Id)
                                             .Select(m => new MemberIndexViewModel(m.Id, m.PersonalNo, m.Age, m.Name.FullName))
-                                            .Take(10);
+                                            .Take(15);
                                         
             return View(await viewModel.ToListAsync());
         }
