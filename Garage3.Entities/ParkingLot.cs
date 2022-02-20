@@ -22,13 +22,13 @@ namespace Garage3.Entities
 
         public ParkingLot()
         {
-            //ParkingNo = 0;
+            
         }
 
 
         public ParkingLot(int typeName)
         {
-           // ParkingNo = typeName;
+           
         }
 
 
