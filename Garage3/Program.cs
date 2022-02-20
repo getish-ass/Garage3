@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Garage3.Data;
 using Garage3.Extensions;
+using Garage3.Automapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,9 +13,12 @@ builder.Services.AddDbContext<Garage3Context>(options =>
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddAutoMapper(typeof(GarageMappings));
+
 var app = builder.Build();
 
 app.SeedDataAsync().GetAwaiter().GetResult();
+
 
 
 // Configure the HTTP request pipeline.

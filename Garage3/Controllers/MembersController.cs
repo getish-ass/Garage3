@@ -11,17 +11,19 @@ using Garage3.Data;
 using Garage3.Entities;
 using Garage3.Models;
 using Garage3.Models.MemberViewModels;
-
+using AutoMapper;
 
 namespace Garage3.Controllers
 {
     public class MembersController : Controller
     {
         private readonly Garage3Context _context;
+        private readonly IMapper mapper;
 
-        public MembersController(Garage3Context context)
+        public MembersController(Garage3Context context, IMapper mapper)
         {
             _context = context;
+            this.mapper = mapper;
         }
 
         // GET: Members
@@ -69,7 +71,8 @@ namespace Garage3.Controllers
         {
             if (ModelState.IsValid)
             {
-                var member = new Member(viewModel.PersonalNo, viewModel.Age, new Name(viewModel.NameFirstName, viewModel.NameLastName));
+                //var member = new Member(viewModel.PersonalNo, viewModel.Age, new Name(viewModel.NameFirstName, viewModel.NameLastName));
+                var member = mapper.Map<Member>(viewModel);
 
                 _context.Add(member);
                 await _context.SaveChangesAsync();
@@ -80,20 +83,21 @@ namespace Garage3.Controllers
         }
 
         // GET: Members/Edit/5
-        public async Task<IActionResult> Edit(int? id, MemberEditViewModel viewModel)
+        //public async Task<IActionResult> Edit(int? id, MemberEditViewModel viewModel)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var member = await _context.Member.FindAsync(id, viewModel.NameFirstName, viewModel.NameLastName);
-
-            if (viewModel == null)
+            var member = await _context.Member.FindAsync(id);
+            //var member = await _context.Member.FindAsync(id, viewModel.NameFirstName, viewModel.NameLastName);
+            if (member == null)
             {
                 return NotFound();
             }
-            return View(viewModel);
+            return View(member);
         }
 
         // POST: Members/Edit/5
@@ -101,9 +105,9 @@ namespace Garage3.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,PersonalNo,Age")] Member member)
+        public async Task<IActionResult> Edit(int id, MemberEditViewModel viewModel)
         {
-            if (id != member.Id)
+            if (id != viewModel.Id)
             {
                 return NotFound();
             }
@@ -112,12 +116,13 @@ namespace Garage3.Controllers
             {
                 try
                 {
-                    _context.Update(member);
+                    //var member = _context.Map<Member>(viewModel);
+                    _context.Update(viewModel);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MemberExists(member.Id))
+                    if (!MemberExists(viewModel.Id))
                     {
                         return NotFound();
                     }
@@ -128,7 +133,7 @@ namespace Garage3.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(member);
+            return View(viewModel);
         }
 
         // GET: Members/Delete/5
