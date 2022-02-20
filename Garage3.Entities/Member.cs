@@ -23,6 +23,8 @@ namespace Garage3.Entities
 
         public ICollection<Vehicle> Vehicles { get; set; }
 
+        public ICollection<VehicleType> VehicleTypes { get; set; } 
+
 
         private Member()
         {
