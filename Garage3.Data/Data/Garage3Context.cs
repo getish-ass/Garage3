@@ -22,11 +22,12 @@ namespace Garage3.Data
 
             modelBuilder.Entity<Member>().Property(m => m.PersonalNo).IsRequired();
 
+         
             modelBuilder.Entity<Vehicle>()
                         .HasKey(v => new { v.MemberId, v .VehicleTypeId} );
 
             modelBuilder.Entity<Name>()
-                        .HasKey(n => new { n.MemberId });                     
+                        .HasKey(n => new { n.MemberId });
 
             modelBuilder.Entity<VehicleType>()
                         .HasMany(t => t.Vehicles);

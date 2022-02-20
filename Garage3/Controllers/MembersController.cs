@@ -28,7 +28,7 @@ namespace Garage3.Controllers
         public async Task<IActionResult> Index()
         {
             var viewModel = _context.Member.OrderByDescending(m => m.Id)
-                                            .Select(m => new MemberIndexViewModel(m.Id, m.PersonalNo, m.Age, m.Name.FullName))
+                                            .Select(m => new MemberIndexViewModel(m.Id, m.PersonalNo, m.Age, m.Name.FullName))                         
                                             .Take(15);
                                         
             return View(await viewModel.ToListAsync());
@@ -80,19 +80,20 @@ namespace Garage3.Controllers
         }
 
         // GET: Members/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? id, MemberEditViewModel viewModel)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var member = await _context.Member.FindAsync(id);
-            if (member == null)
+            var member = await _context.Member.FindAsync(id, viewModel.NameFirstName, viewModel.NameLastName);
+
+            if (viewModel == null)
             {
                 return NotFound();
             }
-            return View(member);
+            return View(viewModel);
         }
 
         // POST: Members/Edit/5
