@@ -65,7 +65,17 @@ namespace Garage3.Data
 
 
 
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            ChangeTracker.DetectChanges();
 
+            foreach (var entry in ChangeTracker.Entries<Member>().Where(e => e.State == EntityState.Modified))
+            {
+                entry.Property("Edited").CurrentValue = DateTime.Now;
+            }
+
+            return base.SaveChangesAsync(cancellationToken);
+        }
 
 
 
