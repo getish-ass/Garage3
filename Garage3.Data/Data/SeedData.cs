@@ -143,16 +143,7 @@ namespace Garage3.Data.Data
 
 
 
-        /* private static int ComputeAge(string personalNo)
-         {
-             //Convert p-Number to dateTime Obj
-
-             //GetAge using the computed dateTime object
-
-             
-
-
-         }*/
+       
 
         public static int GetAge(DateTime dob)
         {
