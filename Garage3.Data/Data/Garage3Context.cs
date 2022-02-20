@@ -20,8 +20,9 @@ namespace Garage3.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Member>().Property(m => m.PersonalNo).IsRequired();
-         
+            modelBuilder.Entity<Member>()
+                        .Property(m => m.PersonalNo).IsRequired();
+
             modelBuilder.Entity<Vehicle>()
                         .HasKey(v => new { v.MemberId, v .VehicleTypeId} );
 
@@ -30,6 +31,7 @@ namespace Garage3.Data
 
             modelBuilder.Entity<VehicleType>()
                         .HasMany(t => t.Vehicles);
+
         }
     }
 }

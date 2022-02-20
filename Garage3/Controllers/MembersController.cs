@@ -29,10 +29,14 @@ namespace Garage3.Controllers
         // GET: Members
         public async Task<IActionResult> Index()
         {
-            var viewModel = _context.Member.OrderByDescending(m => m.Id)
+            /*var viewModel = _context.Member.OrderByDescending(m => m.Id)
                                             .Select(m => new MemberIndexViewModel(m.Id, m.PersonalNo, m.Age, m.Name.FullName))                         
-                                            .Take(15);
-                                        
+                                            .Take(15);*/
+            var viewModel = mapper.ProjectTo<MemberIndexViewModel>(_context.Member)
+                                  .OrderByDescending(m => m.Id)
+                                  .Take(15);
+            
+
             return View(await viewModel.ToListAsync());
         }
 
@@ -44,9 +48,9 @@ namespace Garage3.Controllers
                 return NotFound();
             }
 
-            var member = await _context.Member
-                .Include(m => m.Vehicles)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var member = await mapper.ProjectTo<MemberDetailsViewModel>(_context.Member)
+                                     .Include(v => v.Vehicles)
+                                     .FirstOrDefaultAsync(m => m.Id == id);
 
             if (member == null)
             {

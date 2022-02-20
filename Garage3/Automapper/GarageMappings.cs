@@ -13,6 +13,11 @@ namespace Garage3.Automapper
         public GarageMappings()
         {
             CreateMap<Member, Models.MemberViewModels.MemberCreateViewModel>().ReverseMap();
+            CreateMap<Member, MemberIndexViewModel>();
+            CreateMap<Member, MemberDetailsViewModel>()
+                .ForMember(
+                    dest => dest.Vehicles,
+                    from => from.MapFrom(v => v.Vehicles.Count));
 
         }
     }

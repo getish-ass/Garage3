@@ -20,9 +20,8 @@ namespace Garage3.Entities
         public int Age { get; set; }
 
         public Name Name { get; set; }
-         
-        public ICollection<Vehicle> Vehicles { get; set; }
 
+        public ICollection<Vehicle> Vehicles { get; set; } = new List<Vehicle>();
 
         private Member()
         {

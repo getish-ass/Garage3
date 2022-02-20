@@ -35,7 +35,7 @@ namespace Garage3.Entities
         public int VehicleTypeId { get; set; }
         public VehicleType VehicleType { get; set; }
 
-        public ICollection<ParkingLot> ParkingLot { get; set; }
+        public ICollection<ParkingLot> ParkingLot { get; set; } = new List<ParkingLot>();
 
 
         public Vehicle()
