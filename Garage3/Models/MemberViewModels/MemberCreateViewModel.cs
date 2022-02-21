@@ -1,4 +1,5 @@
 ﻿#nullable disable
+using Garage3.Validations;
 using System.ComponentModel.DataAnnotations;
 
 namespace Garage3.Models.MemberViewModels
@@ -14,6 +15,7 @@ namespace Garage3.Models.MemberViewModels
         public string NameFirstName { get; set; }
         
         [Display(Name = "Last Name")]
+        [NameAttribute]
         public string NameLastName { get; set; }
         
         [Range(18, 90)]

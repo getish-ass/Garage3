@@ -83,6 +83,7 @@ namespace Garage3.Controllers
             if (ModelState.IsValid)
             {
                 var size = _context.VehicleType.Find(viewModel.VehicleTypeId).Size;
+
                 var parkingspots = _context.ParkingLot.Where(p => p.VehicleId == null).Take(size).ToList();
                 //Validate antal platser
 
@@ -93,13 +94,20 @@ namespace Garage3.Controllers
                     Color = viewModel.Color,
                     VehicleTypeId = viewModel.VehicleTypeId,
                     NoWheels = viewModel.NoWheels,
-                    RegNo = viewModel.RegNo,
-                    ParkingLot = parkingspots
-                }; 
+                    RegNo = viewModel.RegNo
+                   // ParkingLot = parkingspots
+                };
 
-
+                //foreach (var item in parkingspots)
+                //{
+                //    vehicle.ParkingLot.Add(item);
+                //}
 
                 _context.Add(vehicle);
+                await _context.SaveChangesAsync();
+
+                vehicle.ParkingLot = parkingspots;
+                _context.Update(vehicle);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
