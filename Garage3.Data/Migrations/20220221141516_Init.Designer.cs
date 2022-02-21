@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Garage3.Data.Migrations
 {
     [DbContext(typeof(Garage3Context))]
-    [Migration("20220221103054_afterMerge")]
-    partial class afterMerge
+    [Migration("20220221141516_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -40,33 +40,34 @@ namespace Garage3.Data.Migrations
                         .HasMaxLength(13)
                         .HasColumnType("nvarchar(13)");
 
-                    b.Property<int?>("VehicleTypeId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("VehicleTypeId");
 
                     b.ToTable("Member");
                 });
 
             modelBuilder.Entity("Garage3.Entities.Name", b =>
                 {
-                    b.Property<int>("MemberId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("FirstName")
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
                     b.Property<string>("LastName")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("MemberId");
+                    b.Property<int>("MemberId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MemberId")
+                        .IsUnique();
 
                     b.ToTable("Name");
                 });
@@ -82,26 +83,20 @@ namespace Garage3.Data.Migrations
                     b.Property<int?>("VehicleId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("VehicleMemberId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("VehicleTypeId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("VehicleMemberId", "VehicleTypeId");
+                    b.HasIndex("VehicleId");
 
                     b.ToTable("ParkingLot");
                 });
 
             modelBuilder.Entity("Garage3.Entities.Vehicle", b =>
                 {
-                    b.Property<int>("MemberId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("VehicleTypeId")
-                        .HasColumnType("int");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Brand")
                         .HasMaxLength(30)
@@ -111,7 +106,7 @@ namespace Garage3.Data.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
-                    b.Property<int>("Id")
+                    b.Property<int>("MemberId")
                         .HasColumnType("int");
 
                     b.Property<string>("Model")
@@ -126,7 +121,12 @@ namespace Garage3.Data.Migrations
                         .HasMaxLength(6)
                         .HasColumnType("nvarchar(6)");
 
-                    b.HasKey("MemberId", "VehicleTypeId");
+                    b.Property<int>("VehicleTypeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MemberId");
 
                     b.HasIndex("VehicleTypeId");
 
@@ -155,13 +155,6 @@ namespace Garage3.Data.Migrations
                     b.ToTable("VehicleType");
                 });
 
-            modelBuilder.Entity("Garage3.Entities.Member", b =>
-                {
-                    b.HasOne("Garage3.Entities.VehicleType", null)
-                        .WithMany("Members")
-                        .HasForeignKey("VehicleTypeId");
-                });
-
             modelBuilder.Entity("Garage3.Entities.Name", b =>
                 {
                     b.HasOne("Garage3.Entities.Member", "Member")
@@ -177,7 +170,7 @@ namespace Garage3.Data.Migrations
                 {
                     b.HasOne("Garage3.Entities.Vehicle", "Vehicle")
                         .WithMany("ParkingLot")
-                        .HasForeignKey("VehicleMemberId", "VehicleTypeId");
+                        .HasForeignKey("VehicleId");
 
                     b.Navigation("Vehicle");
                 });
@@ -215,8 +208,6 @@ namespace Garage3.Data.Migrations
 
             modelBuilder.Entity("Garage3.Entities.VehicleType", b =>
                 {
-                    b.Navigation("Members");
-
                     b.Navigation("Vehicles");
                 });
 #pragma warning restore 612, 618

@@ -4,10 +4,24 @@
 
 namespace Garage3.Data.Migrations
 {
-    public partial class afterMerge : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Member",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PersonalNo = table.Column<string>(type: "nvarchar(13)", maxLength: 13, nullable: false),
+                    Age = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Member", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "VehicleType",
                 columns: table => new
@@ -24,37 +38,18 @@ namespace Garage3.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Member",
+                name: "Name",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    PersonalNo = table.Column<string>(type: "nvarchar(13)", maxLength: 13, nullable: false),
-                    Age = table.Column<int>(type: "int", nullable: false),
-                    VehicleTypeId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Member", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Member_VehicleType_VehicleTypeId",
-                        column: x => x.VehicleTypeId,
-                        principalTable: "VehicleType",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Name",
-                columns: table => new
-                {
-                    MemberId = table.Column<int>(type: "int", nullable: false),
-                    Id = table.Column<int>(type: "int", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
-                    LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
+                    LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    MemberId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Name", x => x.MemberId);
+                    table.PrimaryKey("PK_Name", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Name_Member_MemberId",
                         column: x => x.MemberId,
@@ -67,18 +62,19 @@ namespace Garage3.Data.Migrations
                 name: "Vehicle",
                 columns: table => new
                 {
-                    MemberId = table.Column<int>(type: "int", nullable: false),
-                    VehicleTypeId = table.Column<int>(type: "int", nullable: false),
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     RegNo = table.Column<string>(type: "nvarchar(6)", maxLength: 6, nullable: false),
                     Model = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     Brand = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
                     Color = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
-                    NoWheels = table.Column<int>(type: "int", nullable: false)
+                    NoWheels = table.Column<int>(type: "int", nullable: false),
+                    MemberId = table.Column<int>(type: "int", nullable: false),
+                    VehicleTypeId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Vehicle", x => new { x.MemberId, x.VehicleTypeId });
+                    table.PrimaryKey("PK_Vehicle", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Vehicle_Member_MemberId",
                         column: x => x.MemberId,
@@ -99,29 +95,33 @@ namespace Garage3.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    VehicleId = table.Column<int>(type: "int", nullable: true),
-                    VehicleMemberId = table.Column<int>(type: "int", nullable: true),
-                    VehicleTypeId = table.Column<int>(type: "int", nullable: true)
+                    VehicleId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ParkingLot", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ParkingLot_Vehicle_VehicleMemberId_VehicleTypeId",
-                        columns: x => new { x.VehicleMemberId, x.VehicleTypeId },
+                        name: "FK_ParkingLot_Vehicle_VehicleId",
+                        column: x => x.VehicleId,
                         principalTable: "Vehicle",
-                        principalColumns: new[] { "MemberId", "VehicleTypeId" });
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Member_VehicleTypeId",
-                table: "Member",
-                column: "VehicleTypeId");
+                name: "IX_Name_MemberId",
+                table: "Name",
+                column: "MemberId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_ParkingLot_VehicleMemberId_VehicleTypeId",
+                name: "IX_ParkingLot_VehicleId",
                 table: "ParkingLot",
-                columns: new[] { "VehicleMemberId", "VehicleTypeId" });
+                column: "VehicleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Vehicle_MemberId",
+                table: "Vehicle",
+                column: "MemberId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Vehicle_VehicleTypeId",

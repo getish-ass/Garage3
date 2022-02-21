@@ -23,8 +23,13 @@ namespace Garage3.Controllers
         // GET: Vehicles
         public async Task<IActionResult> Index()
         {
-            var taBortContext = _context.Vehicle.Include(v => v.Member).Include(v => v.VehicleType);
-            return View(await taBortContext.ToListAsync());
+            var vehicle = _context.Vehicle.Include(v => v.Member)
+                                          .Include(v => v.VehicleType)
+                                          .OrderByDescending(v => v.Id)
+                                          .Take(15);
+
+
+            return View(await vehicle.ToListAsync());
         }
 
         // GET: Vehicles/Details/5
@@ -35,10 +40,10 @@ namespace Garage3.Controllers
                 return NotFound();
             }
 
-            var vehicle = await _context.Vehicle
-                .Include(v => v.Member)
-                .Include(v => v.VehicleType)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var vehicle = await _context.Vehicle.Include(v => v.Member)
+                                                .Include(v => v.VehicleType)
+                                                .FirstOrDefaultAsync(m => m.Id == id);
+
             if (vehicle == null)
             {
                 return NotFound();
@@ -50,9 +55,22 @@ namespace Garage3.Controllers
         // GET: Vehicles/Create
         public IActionResult Create()
         {
-            ViewData["MemberId"] = new SelectList(_context.Set<Member>(), "Id", "PersonalNo");
-            ViewData["VehicleTypeId"] = new SelectList(_context.Set<VehicleType>(), "Id", "Id");
-            return View();
+            var viewModel = new VehicleCreateViewModel();
+
+            viewModel.Members = _context.Member.Select(m => new SelectListItem
+            {
+                Value = m.Id.ToString(),
+                Text = m.Name.FullName
+            });
+
+            viewModel.VehicleTypes = _context.VehicleType.Select(v => new SelectListItem
+            {
+                Value = v.Id.ToString(),
+                Text = v.TypeName
+
+            });
+            
+            return View(viewModel);
         }
 
         // POST: Vehicles/Create
@@ -60,17 +78,34 @@ namespace Garage3.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,RegNo,Model,Brand,Color,NoWheels,MemberId,VehicleTypeId")] Vehicle vehicle)
+        public async Task<IActionResult> Create(VehicleCreateViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
+                var size = _context.VehicleType.Find(viewModel.VehicleTypeId).Size;
+                var parkingspots = _context.ParkingLot.Where(p => p.VehicleId == null).Take(size).ToList();
+                //Validate antal platser
+
+                var vehicle = new Vehicle
+                {
+                    MemberId = viewModel.MemberId,
+                    Brand = viewModel.Brand,
+                    Color = viewModel.Color,
+                    VehicleTypeId = viewModel.VehicleTypeId,
+                    NoWheels = viewModel.NoWheels,
+                    RegNo = viewModel.RegNo,
+                    ParkingLot = parkingspots
+                }; 
+
+
+
                 _context.Add(vehicle);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MemberId"] = new SelectList(_context.Set<Member>(), "Id", "PersonalNo", vehicle.MemberId);
-            ViewData["VehicleTypeId"] = new SelectList(_context.Set<VehicleType>(), "Id", "Id", vehicle.VehicleTypeId);
-            return View(vehicle);
+            //ViewData["MemberId"] = new SelectList(_context.Set<Member>(), "Id", "PersonalNo", vehicle.MemberId);
+            //ViewData["VehicleTypeId"] = new SelectList(_context.Set<VehicleType>(), "Id", "Id", vehicle.VehicleTypeId);
+            return View(viewModel);
         }
 
         // GET: Vehicles/Edit/5
