@@ -23,6 +23,8 @@ namespace Garage3.Entities
 
         public ICollection<Vehicle> Vehicles { get; set; } = new List<Vehicle>();
 
+
+
         private Member()
         {
             Age = 0;

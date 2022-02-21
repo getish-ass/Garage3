@@ -4,24 +4,10 @@
 
 namespace Garage3.Data.Migrations
 {
-    public partial class SeedDataUpdate : Migration
+    public partial class afterMerge : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Member",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    PersonalNo = table.Column<string>(type: "nvarchar(13)", maxLength: 13, nullable: false),
-                    Age = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Member", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "VehicleType",
                 columns: table => new
@@ -35,6 +21,26 @@ namespace Garage3.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_VehicleType", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Member",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PersonalNo = table.Column<string>(type: "nvarchar(13)", maxLength: 13, nullable: false),
+                    Age = table.Column<int>(type: "int", nullable: false),
+                    VehicleTypeId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Member", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Member_VehicleType_VehicleTypeId",
+                        column: x => x.VehicleTypeId,
+                        principalTable: "VehicleType",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -106,6 +112,11 @@ namespace Garage3.Data.Migrations
                         principalTable: "Vehicle",
                         principalColumns: new[] { "MemberId", "VehicleTypeId" });
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Member_VehicleTypeId",
+                table: "Member",
+                column: "VehicleTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ParkingLot_VehicleMemberId_VehicleTypeId",

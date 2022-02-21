@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Garage3.Data.Migrations
 {
     [DbContext(typeof(Garage3Context))]
-    [Migration("20220218124420_SeedDataUpdate")]
-    partial class SeedDataUpdate
+    [Migration("20220221103054_afterMerge")]
+    partial class afterMerge
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -40,7 +40,12 @@ namespace Garage3.Data.Migrations
                         .HasMaxLength(13)
                         .HasColumnType("nvarchar(13)");
 
+                    b.Property<int?>("VehicleTypeId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("VehicleTypeId");
 
                     b.ToTable("Member");
                 });
@@ -150,6 +155,13 @@ namespace Garage3.Data.Migrations
                     b.ToTable("VehicleType");
                 });
 
+            modelBuilder.Entity("Garage3.Entities.Member", b =>
+                {
+                    b.HasOne("Garage3.Entities.VehicleType", null)
+                        .WithMany("Members")
+                        .HasForeignKey("VehicleTypeId");
+                });
+
             modelBuilder.Entity("Garage3.Entities.Name", b =>
                 {
                     b.HasOne("Garage3.Entities.Member", "Member")
@@ -203,6 +215,8 @@ namespace Garage3.Data.Migrations
 
             modelBuilder.Entity("Garage3.Entities.VehicleType", b =>
                 {
+                    b.Navigation("Members");
+
                     b.Navigation("Vehicles");
                 });
 #pragma warning restore 612, 618
