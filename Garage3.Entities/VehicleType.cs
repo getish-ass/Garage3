@@ -19,6 +19,8 @@ namespace Garage3.Entities
 
         public ICollection<Vehicle> Vehicles { get; set; }
 
+        public ICollection<Member> Members { get; set; }
+
 
 
         public VehicleType()

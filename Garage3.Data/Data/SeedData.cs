@@ -80,32 +80,7 @@ namespace Garage3.Data.Data
 
             }
 
-            //foreach (var member in members)
-            //{
-            //    foreach (var vehicleType in vehicleTypes)
-            //    {
-            //            if (faker.Random.Int(0, 5) == 0)
-            //            {
-            //                var regNo = faker.Random.AlphaNumeric(6);
-            //                var model = faker.Vehicle.Model();
-            //                var brand = faker.Vehicle.Manufacturer();
-            //                var color = faker.Commerce.Color();
-            //                var noWheel = faker.Random.Int(1, 5);
-
-            //                var vehicle = new Vehicle(regNo, model, brand, color, noWheel)
-            //                {
-            //                    Member = member,
-            //                    VehicleType = vehicleType,
-            //                    ParkingLot = 
-
-            //                };
-
-            //                vehicles.Add(vehicle);
-            //            }
-
-
-            //    }
-           // }
+            
 
             return vehicles;
         }
@@ -155,10 +130,7 @@ namespace Garage3.Data.Data
 
             for (int i = 0; i < 90; i++)
             {
-
-
                 var parkingLot = new ParkingLot();
-
 
                 parkingLots.Add(parkingLot);
             }
@@ -171,16 +143,7 @@ namespace Garage3.Data.Data
 
 
 
-        /* private static int ComputeAge(string personalNo)
-         {
-             //Convert p-Number to dateTime Obj
-
-             //GetAge using the computed dateTime object
-
-             
-
-
-         }*/
+       
 
         public static int GetAge(DateTime dob)
         {
