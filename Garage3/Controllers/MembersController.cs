@@ -48,16 +48,33 @@ namespace Garage3.Controllers
                 return NotFound();
             }
 
-            var member = await mapper.ProjectTo<MemberDetailsViewModel>(_context.Member)
-                                     .Include(v => v.Vehicles)
-                                     .FirstOrDefaultAsync(m => m.Id == id);
+            //var member = await mapper.ProjectTo<MemberDetailsViewModel>(_context.Member)
+            //                         .Include(v => v.Vehicles)
+            //                         .FirstOrDefaultAsync(m => m.Id == id);
+
+
+            var member = await _context.Member
+                .Include(m => m.Name)
+                .Include(m => m.Vehicles)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+
+            var viewModel = new MemberDetailsViewModel
+            {
+                Id = member.Id,
+                Age = member.Age,
+                PersonalNo = member.PersonalNo,
+                NameFirstName = member.Name.FirstName,
+                NameLastName = member.Name.LastName,
+                Vehicles = member.Vehicles
+            };
 
             if (member == null)
             {
                 return NotFound();
             }
 
-            return View(member);
+            return View(viewModel);
         }
 
         // GET: Members/Create
@@ -95,13 +112,25 @@ namespace Garage3.Controllers
                 return NotFound();
             }
 
-            var member = await _context.Member.FindAsync(id);
+            var member = await _context.Member
+                .Include(m => m.Name)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            var viewModel = new MemberEditViewModel 
+                {     
+                    Id = member.Id,
+                    NameFirstName = member.Name.FirstName,
+                    NameLastName = member.Name.LastName,
+                PersonalNo = member.PersonalNo,
+                Age = member.Age
+            };
+            
             //var member = await _context.Member.FindAsync(id, viewModel.NameFirstName, viewModel.NameLastName);
             if (member == null)
             {
                 return NotFound();
             }
-            return View(member);
+            return View(viewModel);
         }
 
         // POST: Members/Edit/5

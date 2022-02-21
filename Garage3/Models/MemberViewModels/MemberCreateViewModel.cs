@@ -14,7 +14,9 @@ namespace Garage3.Models.MemberViewModels
         public string NameFirstName { get; set; }
         
         [Display(Name = "Last Name")]
-        public string NameLastName { get; set; } 
+        public string NameLastName { get; set; }
+        
+        [Range(18, 90)]
         public int Age { get; set; }
 
     }

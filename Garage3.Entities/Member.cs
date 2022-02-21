@@ -36,9 +36,5 @@ namespace Garage3.Entities
             Age = age;
             Name = name;
         }
-
-
-
-
     }
 }

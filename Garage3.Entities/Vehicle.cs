@@ -37,7 +37,6 @@ namespace Garage3.Entities
 
         public ICollection<ParkingLot> ParkingLot { get; set; } = new List<ParkingLot>();
 
-
         public Vehicle()
         {
 
