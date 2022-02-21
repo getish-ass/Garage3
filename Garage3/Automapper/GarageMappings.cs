@@ -13,6 +13,7 @@ namespace Garage3.Automapper
         public GarageMappings()
         {
             CreateMap<Member, MemberCreateViewModel>().ReverseMap();
+            CreateMap<Member, MemberEditViewModel>().ReverseMap();
             CreateMap<Member, MemberIndexViewModel>();
             CreateMap<Member, MemberDetailsViewModel>()
                 .ForMember(

@@ -149,8 +149,13 @@ namespace Garage3.Controllers
             {
                 try
                 {
+                    var member =  await _context.Member.Include(m => m.Name)
+                        .FirstOrDefaultAsync(m => m.Id == id);
+
+                    mapper.Map(viewModel, member);
+
                     //var member = _context.Map<Member>(viewModel);
-                    _context.Update(viewModel);
+                    _context.Update(member);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
